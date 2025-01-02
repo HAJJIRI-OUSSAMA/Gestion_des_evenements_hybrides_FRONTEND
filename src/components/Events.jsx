@@ -9,18 +9,19 @@ const EventList = () => {
 
   // Fetch events from API
   useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const response = await getEvents(); // Update with your API endpoint
-        setEvents(response.data);
-      } catch (err) {
-        setError("Failed to load events.");
-      } finally {
-        setLoading(false);
-      }
-    };
     fetchEvents();
   }, []);
+
+  async function fetchEvents() {
+    try {
+      const data = await getEvents();
+      setEvents(data);
+      setLoading(false);
+    } catch (err) {
+      setError("Failed to load events. Please try again.");
+      setLoading(false);
+    }
+  }
 
   // Loading state
   if (loading) {
@@ -40,28 +41,34 @@ const EventList = () => {
     );
   }
 
+  const formatDate = (dateString) => {
+    const dateObj = new Date(dateString);
+    const day = ("0" + dateObj.getDate()).slice(-2); // Format day to 2 digits
+    const month = ("0" + (dateObj.getMonth() + 1)).slice(-2); // Format month to 2 digits
+    const year = dateObj.getFullYear();
+    return `${day}-${month}-${year}`;
+  };
+
   // Render event cards
   return (
     <div className="container mx-auto px-6 py-10">
       <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
         Available Events
         <Link to={"/add-event"}>
-          <button class="bg-transparent hover:bg-[#65ba49] text-dark font-bold hover:text-white mx-6 py-1 px-4 border-4 border-[#65ba49] hover:border-transparent rounded">
+          <button className="bg-transparent hover:bg-[#65ba49] text-dark font-bold hover:text-white mx-6 py-1 px-4 border-4 border-[#65ba49] hover:border-transparent rounded">
             New Event
           </button>
         </Link>
       </h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {events.map((event) => (
+        {events.map((event, index) => (
           <div
-            key={event.id}
+            key={index}
             className="bg-white shadow-lg rounded-lg p-4 hover:shadow-xl transition-shadow"
           >
-            <h3 className="text-xl font-semibold text-blue-600">
-              {event.name}
-            </h3>
-            <p className="text-gray-600 mt-2">Date: {event.date}</p>
+            <h3 className="text-xl font-semibold text-blue-600">{event.nom}</h3>
+            <p className="text-gray-600 mt-2">Date: {formatDate(event.date)}</p>
             <p className="text-gray-600 mt-1">
               Mode: {event.mode === "online" ? "Online" : "In-Person"}
             </p>

@@ -3,7 +3,7 @@ import { addEvent } from "../services/eventServices";
 import { useNavigate } from "react-router-dom";
 
 const AddEventForm = () => {
-  const [title, setTitle] = useState("");
+  const [nom, setNom] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
   const [mode, setMode] = useState("");
@@ -15,14 +15,35 @@ const AddEventForm = () => {
 
   async function handleForm(e) {
     e.preventDefault();
-    await addEvent({
-      title,
-      description,
-      date: new Date(date).toISOString(),
-      mode,
-      lien,
-    });
-    // navigate("/books");
+
+    if (!nom || !description || !date || !mode) {
+      setError("All fields are required except for the link.");
+      return;
+    }
+
+    const parsedDate = new Date(date);
+    if (isNaN(parsedDate.getTime())) {
+      setError("Please provide a valid date.");
+      return;
+    }
+
+    try {
+      const event = {
+        nom,
+        description,
+        date: parsedDate,
+        mode,
+        lien,
+      };
+      await addEvent(event);
+
+      setMessage("Event added successfully!");
+      setError("");
+      navigate("/events");
+    } catch (err) {
+      setError("Failed to add event. Please try again.");
+      console.error(err);
+    }
   }
 
   return (
@@ -40,6 +61,7 @@ const AddEventForm = () => {
             id="title"
             name="title"
             required
+            onChange={(e) => setNom(e.target.value)}
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             placeholder="Enter event title"
           />
@@ -52,6 +74,7 @@ const AddEventForm = () => {
             id="description"
             name="description"
             required
+            onChange={(e) => setDescription(e.target.value)}
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             placeholder="Enter event description"
           />
@@ -64,7 +87,9 @@ const AddEventForm = () => {
             type="date"
             id="date"
             name="date"
+            value={date.split("-").reverse().join("-")}
             required
+            onChange={(e) => setDate(e.target.value)}
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -76,11 +101,12 @@ const AddEventForm = () => {
             id="mode"
             name="mode"
             required
+            onChange={(e) => setMode(e.target.value)}
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
           >
             <option value="">Select Mode</option>
-            <option value="online">Online</option>
-            <option value="in-person">In-Person</option>
+            <option value="online">online</option>
+            <option value="in-person">in-person</option>
           </select>
         </div>
         <div className="mb-4">
@@ -91,6 +117,7 @@ const AddEventForm = () => {
             type="url"
             id="lien"
             name="lien"
+            onChange={(e) => setLien(e.target.value)}
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             placeholder="Enter event link"
           />

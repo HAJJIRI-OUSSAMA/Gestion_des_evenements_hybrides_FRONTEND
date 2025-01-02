@@ -6,7 +6,7 @@ const API = "http://localhost:9091/api/events";
 export async function getEvents() {
   try {
     const response = await axios.get(API);
-    return response;
+    return response.data;
   } catch (error) {
     console.error("Error fetching events:", error.message);
     return [];
@@ -16,7 +16,7 @@ export async function getEvents() {
 export async function addEvent(event) {
   try {
     const response = await axios.post(API, event);
-    return response;
+    return response.data;
   } catch (error) {
     console.error("Error adding event:", error.message);
     return null;
