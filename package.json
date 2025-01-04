@@ -10,6 +10,7 @@
     "react-router-dom": "^7.1.1",
     "react-scripts": "^5.0.1",
     "string.prototype.trim": "^1.2.10",
+    "swiper": "^11.2.0",
     "tailwindcss-animate": "^1.0.7",
     "web-vitals": "^4.2.4"
   },

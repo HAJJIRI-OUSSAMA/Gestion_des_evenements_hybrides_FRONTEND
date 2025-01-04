@@ -33,15 +33,16 @@ export async function deleteEvent(id) {
   }
 }
 
-export async function updateEvent(id, updatedEvent) {
+// eventServices.js
+export const updateEvent = async (eventId, updateData) => {
   try {
-    const response = await axios.put(`${API}/${id}`, updatedEvent);
+    const response = await axios.put(`${API}/${eventId}`, updateData);
     return response.data;
   } catch (error) {
     console.error("Error updating event:", error.message);
-    return null;
+    throw new Error("Failed to update event");
   }
-}
+};
 
 export async function getEvent(id) {
   try {

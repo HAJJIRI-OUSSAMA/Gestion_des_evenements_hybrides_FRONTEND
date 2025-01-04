@@ -2,6 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+.card {
+  background-color: #000000; /* Futuristic gradient */
+  border-radius: 5px; /* Smooth and modern curve */
+  padding: 24px; /* Ample spacing */
+  box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.1),
+    -8px -8px 16px rgba(255, 255, 255, 0.8); /* Neumorphism-inspired shadow */
+  border: 1px solid rgba(255, 255, 255, 0.6); /* Subtle glowing border */
+  backdrop-filter: blur(10px); /* Glassy effect */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth interactions */
+}
+
+.card:hover {
+  transform: translateY(-5px); /* Subtle lift effect */
+  box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.2),
+    -12px -12px 24px rgba(255, 255, 255, 0.9); /* Enhanced depth on hover */
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",

@@ -1,6 +1,6 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
 
 export default function EventHighlights() {
   return (
@@ -21,12 +21,12 @@ export default function EventHighlights() {
         >
           <SwiperSlide>
             <div className="bg-white shadow-lg rounded-lg p-4">
-              <h3 className="text-xl font-semibold text-blue-600">Event Name</h3>
+              <h3 className="text-xl font-semibold text-blue-600">
+                Event Name
+              </h3>
               <p className="text-gray-600 mt-2">Date: January 15, 2025</p>
               <p className="text-gray-600 mt-1">Mode: Online</p>
-              <button
-                className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
-              >
+              <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">
                 View Details
               </button>
             </div>
